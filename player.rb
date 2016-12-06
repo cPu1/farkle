@@ -1,5 +1,5 @@
 class Player
-  attr_accessor :total_score, :id
+  attr_reader :total_score, :id
 
   def initialize(id)
     @id = id
@@ -13,6 +13,14 @@ class Player
 
   def can_accumulate?()
     @total_score >= 300
+  end
+
+  def total_turn_score()
+    if can_accumulate?
+      @total_score + @turn_score
+    else
+      0
+    end
   end
 
   def has_max_score?()

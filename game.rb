@@ -45,7 +45,7 @@ class Game
       score, next_dice_count = Game.compute_score(roll)
       puts "Score in this round: #{score}"
       player.add_turn_score(score)
-      puts "Total score: #{player.total_score}"
+      puts "Total score: #{player.total_turn_score}"
 
       if next_dice_count > 0
         print "Do you want to roll the non-scoring #{next_dice_count} #{next_dice_count > 1 ? 'dice' : 'die'} (y/n): "
@@ -102,7 +102,7 @@ class Game
         end
      end
     end
-    
+
     return 0, 0 if total == 0
     return total, non_scoring
   end
