@@ -81,40 +81,32 @@ class Game
       sets
     end
 
-    if main_set == nil
-      total = dice.reduce(0) do |total, n|
-        score = Game.count_rest(n)
-        if score == 0
-          non_scoring += 1
-        else
-          total += score
+    set_score = ->(value, n = 1) {
+      score =
+        case value
+        when 1
+          100 * n
+        when 5
+          50 * n
+        else 0
         end
-        total
+
+      if score == 0
+        non_scoring += n
+      else
+        total += score
       end
+    }
+
+    if main_set == nil
+      dice.each &set_score
     else
       total = main_set == 1 ? 1000 : main_set * 100
-      sets.each do |k, v|
-        score = Game.count_rest(k, v)
-        if score == 0
-          non_scoring += v
-        else
-          total += score
-        end
-     end
+      sets.each { |k, v| set_score[k, v] }
     end
 
     return 0, 0 if total == 0
     return total, non_scoring
-  end
-
-  def self.count_rest(value, n = 1)
-    case value
-    when 1
-      100 * n
-    when 5
-      50 * n
-    else 0
-    end
   end
 end
 

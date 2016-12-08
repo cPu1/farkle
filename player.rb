@@ -16,7 +16,7 @@ class Player
   end
 
   def total_turn_score()
-    if can_accumulate?
+    if can_accumulate? # || @turn_score >= 300
       @total_score + @turn_score
     else
       0
